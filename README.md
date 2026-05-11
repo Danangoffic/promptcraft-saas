@@ -11,6 +11,7 @@ Sudah tersedia:
 - Supabase service role client untuk server-only jobs
 - Database schema dan RLS sudah diterapkan ke project Supabase `ozrvbtgspqxvqiuclmbk`
 - Login/register email-password dengan Supabase Auth
+- Login/register Google OAuth dengan Supabase Auth
 - JWT bearer helper untuk API integration
 - Pricing page
 - Dashboard prompt library
@@ -69,6 +70,45 @@ Halaman tersedia:
 ```
 
 Flow browser memakai Supabase SSR cookies. Access token adalah JWT yang dikelola Supabase, lalu middleware memanggil `supabase.auth.getUser()` untuk memvalidasi user sebelum masuk ke route protected seperti `/dashboard`, `/admin`, dan `/account`.
+
+### Google OAuth
+
+Route tersedia:
+
+```txt
+/auth/google
+/auth/callback
+```
+
+Tombol Google sudah tersedia di `/login` dan `/register`.
+
+Konfigurasi yang perlu dilakukan manual:
+
+1. Buka Google Cloud Console.
+2. Buat OAuth Client ID dengan tipe `Web application`.
+3. Tambahkan Authorized JavaScript origins:
+
+```txt
+http://localhost:3000
+https://domain-production-kamu.com
+```
+
+4. Tambahkan Authorized redirect URI Google ke callback Supabase:
+
+```txt
+https://ozrvbtgspqxvqiuclmbk.supabase.co/auth/v1/callback
+```
+
+5. Buka Supabase Dashboard > Authentication > Providers > Google.
+6. Aktifkan Google provider.
+7. Masukkan Google Client ID dan Client Secret.
+8. Buka Supabase Dashboard > Authentication > URL Configuration.
+9. Tambahkan redirect URL aplikasi:
+
+```txt
+http://localhost:3000/auth/callback
+https://domain-production-kamu.com/auth/callback
+```
 
 ### API JWT auth
 
