@@ -10,6 +10,10 @@ export default function RegisterPage({ searchParams }: { searchParams?: { error?
 
         {searchParams?.error && <p className="mt-4 rounded-2xl bg-red-500/10 p-3 text-sm text-red-200">Registrasi gagal. Cek email dan password.</p>}
 
+        <Link href="/auth/google?next=/dashboard" className="mt-6 flex w-full items-center justify-center rounded-full bg-white px-5 py-3 font-bold text-slate-950">
+          Daftar dengan Google
+        </Link>
+
         <form className="mt-6 space-y-4" action={signup}>
           <div>
             <label className="text-sm font-medium text-slate-200" htmlFor="email">Email</label>
