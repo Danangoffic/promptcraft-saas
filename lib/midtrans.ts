@@ -1,0 +1,15 @@
+import midtransClient from "midtrans-client";
+
+export function createSnapClient() {
+  return new midtransClient.Snap({
+    isProduction: process.env.MIDTRANS_IS_PRODUCTION === "true",
+    serverKey: process.env.MIDTRANS_SERVER_KEY!,
+    clientKey: process.env.MIDTRANS_CLIENT_KEY!
+  });
+}
+
+export function getMidtransBaseUrl() {
+  return process.env.MIDTRANS_IS_PRODUCTION === "true"
+    ? "https://app.midtrans.com"
+    : "https://app.sandbox.midtrans.com";
+}
