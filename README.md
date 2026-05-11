@@ -10,6 +10,8 @@ Sudah tersedia:
 - Supabase Auth-ready client setup
 - Supabase service role client untuk server-only jobs
 - Database schema dan RLS sudah diterapkan ke project Supabase `ozrvbtgspqxvqiuclmbk`
+- Login/register email-password dengan Supabase Auth
+- JWT bearer helper untuk API integration
 - Pricing page
 - Dashboard prompt library
 - Prompt detail page
@@ -54,6 +56,45 @@ npm install
 npm run dev
 ```
 
+## Authentication
+
+### Browser auth
+
+Halaman tersedia:
+
+```txt
+/login
+/register
+/account
+```
+
+Flow browser memakai Supabase SSR cookies. Access token adalah JWT yang dikelola Supabase, lalu middleware memanggil `supabase.auth.getUser()` untuk memvalidasi user sebelum masuk ke route protected seperti `/dashboard`, `/admin`, dan `/account`.
+
+### API JWT auth
+
+Login API:
+
+```bash
+curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password123"}'
+```
+
+Response berisi `access_token`. Pakai token itu sebagai Bearer JWT:
+
+```bash
+curl http://localhost:3000/api/auth/me \
+  -H "Authorization: Bearer <access_token>"
+```
+
+Register API:
+
+```bash
+curl -X POST http://localhost:3000/api/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password123"}'
+```
+
 ## Generate prompt cron
 
 Endpoint:
@@ -90,7 +131,6 @@ Webhook memverifikasi `signature_key`, update order, dan mengaktifkan subscripti
 
 ## Next steps
 
-- Tambahkan login/register UI
 - Tambahkan admin review queue untuk generated prompts
 - Tambahkan Vercel Cron
 - Tambahkan seed `generation_schedules`
